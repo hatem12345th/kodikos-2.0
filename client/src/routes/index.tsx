@@ -1,12 +1,14 @@
 import ProtectedRoute from "@/components/ProtectedRoute";
+import { ThemeSwitcher } from "@/components/ThemeSwitcher";
 import { DashboardLayout } from "@/layout";
+import { Button, Card } from "@heroui/react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 
 export const router = createBrowserRouter([
   {
     path: '/',
-    element: <h1>s</h1>,
+    element:  <></>,
   },
   {
     element: <ProtectedRoute />,
@@ -16,7 +18,7 @@ export const router = createBrowserRouter([
         children: [
           { 
             path: '/dashboard', 
-            element: <h1>sss</h1> 
+            element: <ThemeSwitcher /> 
           },
          
           { 

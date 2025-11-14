@@ -6,7 +6,7 @@ export default function DashboardLayout() {
   const [open, setOpen] = useState(true);
 
   return (
-    <div className="flex h-screen w-full bg-gray-100 dark:bg-gray-900">
+    <div className="flex h-screen w-full  dark:bg-black">
       {/* Sidebar */}
       <Sidebar open={open} setOpen={setOpen} />
 

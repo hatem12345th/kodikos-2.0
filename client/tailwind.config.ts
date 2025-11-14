@@ -3,7 +3,7 @@ import herouiTheme from "@heroui/theme";
 
 /** @type {import('tailwindcss').Config} */
 export default {
-  presets: [herouiTheme],  // ✅ REQUIRED
+  presets: [herouiTheme],
 
   content: [
     "./index.html",
@@ -11,15 +11,9 @@ export default {
     "./node_modules/@heroui/theme/dist/**/*.{js,ts,jsx,tsx}",
   ],
 
-  darkMode: "class",
+  darkMode: "class", // ✅ Use class strategy
 
   plugins: [heroui()],
 
-  theme: {
-    extend: {
-      colors: {
-        primary: "#1E40AF",
-      },
-    },
-  },
+ 
 };
