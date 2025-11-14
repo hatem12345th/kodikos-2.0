@@ -1,15 +1,30 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-// import Home from "../pages/Home";
-// import Login from "../pages/Login";
+import ProtectedRoute from "@/components/ProtectedRoute";
+import { DashboardLayout } from "@/layout";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
-export default function AppRoutes() {
-  return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<h1> Home page </h1>} />
-        {/* <Route path="/login" element={<Login />} /> */}
-        {/* Add more routes here */}
-      </Routes>
-    </BrowserRouter>
-  );
-}
+
+export const router = createBrowserRouter([
+  {
+    path: '/',
+    element: <h1>s</h1>,
+  },
+  {
+    element: <ProtectedRoute />,
+    children: [
+      {
+        element: <DashboardLayout />,
+        children: [
+          { 
+            path: '/dashboard', 
+            element: <h1>sss</h1> 
+          },
+         
+          { 
+            path: '*', 
+            element: <h1>Not fond</h1> 
+          },
+        ],
+      },
+    ],
+  },
+]);
