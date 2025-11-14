@@ -6,12 +6,12 @@ export default function DashboardLayout() {
   const [open, setOpen] = useState(true);
 
   return (
-    <div className="flex h-screen w-full  dark:bg-black">
+    <div className="flex h-screen min-w-full  dark:bg-black">
       {/* Sidebar */}
       <Sidebar open={open} setOpen={setOpen} />
 
       {/* Main Content */}
-      <main className="flex-1 overflow-y-auto p-6">
+      <main className="w-full overflow-auto">
         <Outlet />
       </main>
     </div>
