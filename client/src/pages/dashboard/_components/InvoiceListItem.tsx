@@ -1,4 +1,6 @@
 import { Badge, Button, Card, CardBody, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger } from "@heroui/react";
+import { DotsSixVerticalIcon } from "@phosphor-icons/react";
+import { DotsSixIcon } from "@phosphor-icons/react/dist/ssr";
 import { FileText, MoreVertical } from "lucide-react";
 import { FC } from "react";
 
@@ -30,7 +32,7 @@ export const InvoiceListItem: FC<InvoiceListItemProps> = ({ status }) => (
   <Card className="mb-3">
     <CardBody className="flex flex-row items-center justify-between py-4">
       <div className="flex items-center gap-4 flex-1">
-        <FileText className="w-5 h-5 text-default-400" />
+        <DotsSixVerticalIcon size={24} />
         <div className="flex flex-col">
           <p className="font-medium">Invoice Details</p>
           <p className="text-sm text-default-500">Today, 1:15 PM</p>
