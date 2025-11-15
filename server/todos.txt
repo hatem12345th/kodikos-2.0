@@ -1,1 +1,36 @@
-. kill hatem
+1 - Set up an ASP.NET Core Project: We'll create a new ASP.NET Core project (Web API) to handle the requests.
+
+Google OAuth and Gmail API Integration:
+
+We need to authenticate the user's Google account to access Gmail. We'll use OAuth 2.0 and the Gmail API.
+
+We'll set up the Gmail API to watch for new emails (using push notifications or periodically polling).
+
+Email Processing:
+
+When a new email arrives, we'll check if it contains an invoice (maybe by subject, sender, or attachment type).
+
+We'll download the attachments (if any) that are images or PDFs.
+
+OCR for Image and PDF:
+
+For images, we can use an OCR library (like Tesseract) to extract text.
+
+For PDFs, we might need to convert them to images first and then use OCR, or use a PDF text extraction library if the PDF is text-based.
+
+LLM Integration:
+
+We'll use a free LLM (like GPT-3.5-turbo or a free alternative) to parse the extracted text and structure the invoice information (like date, total amount, vendor, etc.).
+
+Excel Generation:
+
+We'll use a library (like EPPlus or ClosedXML) to create an Excel file and write the extracted data.
+
+Storage:
+
+We need to store the Excel file somewhere (like local storage or cloud storage) and possibly keep track of processed emails.
+
+API Endpoints:
+
+We might need an endpoint to initiate the OAuth flow and another to handle the Gmail push notifications (if using push) or a background service to poll for emails.
+

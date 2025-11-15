@@ -1,0 +1,6 @@
+@InviceAutomation_HostAddress = http://localhost:5104
+
+GET {{InviceAutomation_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
