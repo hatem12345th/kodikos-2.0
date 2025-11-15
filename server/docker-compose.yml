@@ -1,0 +1,34 @@
+version: '3.9'
+
+services:
+  web-api:
+    build:
+      context: ./InviceAutomation
+      dockerfile: Dockerfile
+    ports:
+      - "5104:5104"
+    depends_on:
+      - postgres-db
+    environment:
+      # --- ADD THIS LINE ---
+      - ASPNETCORE_ENVIRONMENT=Production
+      - ConnectionStrings__DefaultConnection=server=postgres-db;database=InvoiceAutomation;User ID=postgres;password=9315eab6027bc2f8a7f4ceba51d1a60d326564b7
+      - ASPNETCORE_URLS=http://+:5104
+      # - ASPNETCORE_Kestrel__Certificates__Default__Password=your-cert-password
+      # - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/aspnetapp.pfx
+    # volumes:
+    #   - ./InviceAutomation/https:/https:ro
+
+  postgres-db:
+    image: postgres:15
+    environment:
+      POSTGRES_DB: InvoiceAutomation
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 9315eab6027bc2f8a7f4ceba51d1a60d326564b7
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5433:5432"
+
+volumes:
+  postgres_data:

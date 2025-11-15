@@ -3,11 +3,10 @@ import { DashboardLayout, OutgoingInvoicesLayout } from "@/layout";
 import { Analytics, DashboardPage, OutgoingInvoices } from "@/pages";
 import { createBrowserRouter } from "react-router-dom";
 
-
 export const router = createBrowserRouter([
   {
-    path: '/',
-    element:  <></>,
+    path: "/",
+    element: <></>,
   },
   {
     element: <ProtectedRoute />,
@@ -15,23 +14,21 @@ export const router = createBrowserRouter([
       {
         element: <DashboardLayout />,
         children: [
-          { 
-            path: '/incoming-invoices', 
-            element: <DashboardPage /> 
+          {
+            path: "/incoming-invoices",
+            element: <DashboardPage />,
           },
           {
-            path:"/outgoing-invoices",
-            element:<OutgoingInvoicesLayout />
+            path: "/outgoing-invoices",
+            element: <OutgoingInvoicesLayout />,
           },
           {
-            path:"/Analytics",
-            element:<Analytics />
-          }
-          ,
-
-          { 
-            path: '*', 
-            element: <h1>Not fond</h1> 
+            path: "/Analytics",
+            element: <Analytics />,
+          },
+          {
+            path: "*",
+            element: <h1>Not fond</h1>,
           },
         ],
       },
