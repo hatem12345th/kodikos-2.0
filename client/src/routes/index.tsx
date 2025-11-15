@@ -16,7 +16,7 @@ export const router = createBrowserRouter([
         element: <DashboardLayout />,
         children: [
           { 
-            path: '/dashboard', 
+            path: '/incoming-invoices', 
             element: <DashboardPage /> 
           },
           {
@@ -28,6 +28,7 @@ export const router = createBrowserRouter([
             element:<Analytics />
           }
           ,
+
           { 
             path: '*', 
             element: <h1>Not fond</h1> 

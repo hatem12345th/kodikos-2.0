@@ -1,12 +1,12 @@
 import React, { useState, FC } from 'react';
-import { Button, Card, CardBody, CardHeader, Tab, Tabs } from '@heroui/react';
+import { Button, Card, CardBody } from '@heroui/react';
 import { Header } from './_components/header';
 import { TabNavigation } from './_components/TabNavigation';
 import { InvoiceList } from './_components/InvoiceList';
-import { ImportActions } from './_components/ImportActions';
 import { StatsSection } from './_components/StatsSection';
-import { Files, Rows } from '@phosphor-icons/react';
-import { Table } from 'lucide-react';
+import { Files } from '@phosphor-icons/react';
+import { api } from '@/lib/axios';
+import toast from 'react-hot-toast';
 
 // Progress Overlay Component
 interface ProgressOverlayProps {
@@ -143,7 +143,9 @@ export const EmptyState: FC<EmptyStateProps> = ({ selectedTab, onUploadClick, on
     if (e.target.files) {
       onFilesSelected(e.target.files);
     }
+    
   };
+  
 
   return (
     <div 
@@ -197,57 +199,78 @@ const DashboardPage: FC = () => {
   const [selectedTab, setSelectedTab] = useState<string>('manually');
   const [showProgress, setShowProgress] = useState(false);
 
-  const handleTabChange = (key: React.Key): void => {
-    setSelectedTab(key as string);
-  };
-
-  const handleUploadClick = () => {
+  const uploadInvoices = async (files: FileList) => {
+    if (files.length === 0) return;
     setShowProgress(true);
-  };
 
-  const handleProgressComplete = () => {
-    setShowProgress(false);
-  };
+    try {
+      for (let i = 0; i < files.length; i++) {
+        const file = files[i];
 
-  const handleFilesSelected = (files: FileList) => {
-    setShowProgress(true);
+        const formData = new FormData();
+        formData.append("file", file);
+
+        const response = await api.post("/api/Invoice/process", formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        });
+
+        console.log("Invoice processed:", response.data);
+      }
+
+      setTimeout(() => setShowProgress(false), 1000);
+    } catch (error: any) {
+      console.error("Error processing invoice:", error);
+      setShowProgress(false);
+
+      toast.error(
+        error.response?.data?.message ||
+        "Failed to process invoice. Please try again."
+      );
+    }
   };
 
   return (
-    <div className="w-full p-8 bg-default-50 ">
-      <ProgressOverlay isVisible={showProgress} onComplete={handleProgressComplete} />
-      
-      <div className=" ">
-        <Header />
-        <StatsSection />
+    <div className="w-full p-8 bg-default-50">
+      <ProgressOverlay
+        isVisible={showProgress}
+        onComplete={() => setShowProgress(false)}
+      />
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          <div className="lg:col-span-2 space-y-1">
-            <div className='flex gap-2'>
-                 <Button size='sm' variant='ghost'><Rows size={20} /></Button> 
-                <Button size='sm' variant='ghost' ><Table  /></Button> 
-            </div>
-           
-            <Card>     
-              <CardBody className="gap-4">
-                <InvoiceList />
-              </CardBody>
-            </Card>
-          </div>
+      <Header />
+      <StatsSection />
 
-          <div className="flex flex-col gap-6">
-            <TabNavigation selected={selectedTab} onSelectionChange={handleTabChange} />
-            <Card>
-              <CardBody className="gap-4">
-               {selectedTab === "sync-invoices" && <ImportActions />}  
-                <EmptyState selectedTab={selectedTab} onUploadClick={handleUploadClick} onFilesSelected={handleFilesSelected} />
-              </CardBody>
-            </Card>
-          </div>
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div className="lg:col-span-2 space-y-1">
+          <Card>
+            <CardBody>
+              <InvoiceList />
+            </CardBody>
+          </Card>
+        </div>
+
+        <div className="flex flex-col gap-6">
+          <TabNavigation
+            selected={selectedTab}
+            onSelectionChange={setSelectedTab}
+          />
+
+          <Card>
+            <CardBody>
+              <EmptyState
+                selectedTab={selectedTab}
+                onUploadClick={() => setShowProgress(true)}
+                onFilesSelected={uploadInvoices}   // ⭐ REAL UPLOAD CALL HERE
+              />
+            </CardBody>
+          </Card>
         </div>
       </div>
     </div>
   );
 };
+
+
 
 export default DashboardPage;

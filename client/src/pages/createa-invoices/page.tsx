@@ -21,6 +21,7 @@ import {
   Plus,
   DotsThreeVertical,
 } from '@phosphor-icons/react';
+import { useNavigate } from 'react-router-dom';
 
 interface LineItem {
   id: number;
@@ -94,6 +95,7 @@ export default function CreateInvoice() {
       [field]: e.target.value,
     }));
   };
+  const navigate = useNavigate()
 
   return (
     <div className="min-h-screen bg-background p-8">
@@ -101,7 +103,7 @@ export default function CreateInvoice() {
       <div className="mb-8">
         <Breadcrumbs className="mb-4">
           <BreadcrumbItem>
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2" onClick={() => navigate("")} >
               <BookmarkSimple size={16} />
               Outgoing Invoices
             </div>
@@ -248,7 +250,7 @@ export default function CreateInvoice() {
               <TableColumn className="bg-muted">Price</TableColumn>
               <TableColumn className="bg-muted">Tax</TableColumn>
               <TableColumn className="bg-muted">Amount</TableColumn>
-              <TableColumn className="bg-muted w-12"></TableColumn>
+              <TableColumn className="bg-muted w-12"> </TableColumn>
             </TableHeader>
             <TableBody>
               {lineItems.map((item) => (
