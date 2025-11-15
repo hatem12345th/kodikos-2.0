@@ -6,17 +6,27 @@ import { Button } from '@heroui/react';
 import { CaretDown } from '@phosphor-icons/react';
 
 const data = [
-  { quarter: 'q1', invoices: 30 },
-  { quarter: 'q1', invoices: 20 },
-  { quarter: 'q1', invoices: 30 },
-  { quarter: 'q2', invoices: 25 },
-  { quarter: 'q2', invoices: 20 },
-  { quarter: 'q2', invoices: 30 },
-  { quarter: 'q3', invoices: 20 },
+  { quarter: '', invoices: 10 },
+  { quarter: '', invoices: 20 },
+  { quarter: 'q1', invoices: 26 },
+    { quarter: '', invoices: 30 },
+      { quarter: '', invoices: 24 },
+  { quarter: '', invoices: 10 },
+
+    { quarter: 'q2', invoices: 26 },
+
+  { quarter: '', invoices: 30 },
+  { quarter: '', invoices: 26 },
+  { quarter: '', invoices: 10 },
+  { quarter: '', invoices: 24 },
   { quarter: 'q3', invoices: 25 },
-  { quarter: 'q3', invoices: 30 },
-  { quarter: 'q4', invoices: 15 },
-  { quarter: 'q4', invoices: 20 },
+  { quarter: '', invoices: 30 },
+  { quarter: '', invoices: 24 },
+  { quarter: '', invoices: 10 },
+    { quarter: '', invoices: 20 },
+  
+    { quarter: 'q4', invoices: 26 },
+
 ];
 
 export function InvoicesChart() {

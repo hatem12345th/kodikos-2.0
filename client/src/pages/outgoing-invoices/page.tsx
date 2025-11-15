@@ -10,106 +10,15 @@ import {
   TableBody,
   TableRow,
   TableCell,
-  Input,
-  Pagination,
   Chip,
-  Dropdown,
-  DropdownTrigger,
-  DropdownMenu,
-  DropdownItem,
+
 } from '@heroui/react'
-import {
-  FileText,
-  Clock,
-  Star,
-  CheckCircle,
-  List,
-  GridFour,
-  Download,
-  CaretRight,
-  CaretLeft,
-  DotsThreeVertical,
-  Plus,
-} from '@phosphor-icons/react'
+import { FileText, Clock, Star, CheckCircle, Plus, List, GridFour, DotsThreeVertical, CaretLeft, CaretRight } from '@phosphor-icons/react'
 import { useNavigate } from 'react-router-dom'
-import { downloadLog } from '@/lib/api'
+import { downloadAndReadLog } from '@/lib/api'
+import { Download } from 'lucide-react'
 
-const invoices = [
-  {
-    id: 'INV-1001',
-    customer: 'Fendi Nofel',
-    invoiceDate: '23/02/2025',
-    dueDate: '25/02/2025',
-    amount: '4000 DA',
-    status: 'Paid',
-  },
-  {
-    id: 'INV-1002',
-    customer: 'Fendi Nofel',
-    invoiceDate: '23/02/2025',
-    dueDate: '25/02/2025',
-    amount: '4000 DA',
-    status: 'Paid',
-  },
-  {
-    id: 'INV-1003',
-    customer: 'Fendi Nofel',
-    invoiceDate: '23/02/2025',
-    dueDate: '25/02/2025',
-    amount: '4000 DA',
-    status: 'Paid',
-  },
-  {
-    id: 'INV-1004',
-    customer: 'Fendi Nofel',
-    invoiceDate: '23/02/2025',
-    dueDate: '25/02/2025',
-    amount: '4000 DA',
-    status: 'Paid',
-  },
-  {
-    id: 'INV-1005',
-    customer: 'Fendi Nofel',
-    invoiceDate: '23/02/2025',
-    dueDate: '25/02/2025',
-    amount: '4000 DA',
-    status: 'Paid',
-  },
-  {
-    id: 'INV-1006',
-    customer: 'Fendi Nofel',
-    invoiceDate: '23/02/2025',
-    dueDate: '25/02/2025',
-    amount: '4000 DA',
-    status: 'Paid',
-  },
-  {
-    id: 'INV-1007',
-    customer: 'Fendi Nofel',
-    invoiceDate: '23/02/2025',
-    dueDate: '25/02/2025',
-    amount: '4000 DA',
-    status: 'Paid',
-  },
-  {
-    id: 'INV-1008',
-    customer: 'Fendi Nofel',
-    invoiceDate: '23/02/2025',
-    dueDate: '25/02/2025',
-    amount: '4000 DA',
-    status: 'Paid',
-  },
-  {
-    id: 'INV-1009',
-    customer: 'Fendi Nofel',
-    invoiceDate: '23/02/2025',
-    dueDate: '25/02/2025',
-    amount: '4000 DA',
-    status: 'Paid',
-  },
-]
-
-const StatCard = ({ icon: Icon, value, label }:any) => (
+const StatCard = ({ icon: Icon, value, label }: any) => (
   <Card className="flex flex-col gap-4 p-6 border border-default-200">
     <div className="flex items-center gap-3">
       <Icon size={24} className="text-default-500" />
@@ -123,12 +32,19 @@ export default function OutgoingInvoices() {
   const [page, setPage] = useState(1)
   const [viewType, setViewType] = useState('list')
   const [selectedRows, setSelectedRows] = useState<Set<string>>(new Set([]))
-      const navigate = useNavigate();
+  const [invoices, setInvoices] = useState<any[]>([]) // dynamic invoices from Excel
+  const navigate = useNavigate()
 
   const itemsPerPage = 5
   const totalPages = Math.ceil(invoices.length / itemsPerPage)
   const startIdx = (page - 1) * itemsPerPage
   const paginatedInvoices = invoices.slice(startIdx, startIdx + itemsPerPage)
+
+  // Load Excel file and display in table
+  const handleImportExcel = async () => {
+    const data = await downloadAndReadLog()
+    if (data) setInvoices(data)
+  }
 
   return (
     <main className="min-h-screen bg-background p-8">
@@ -148,7 +64,7 @@ export default function OutgoingInvoices() {
 
         {/* Stat Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-          <StatCard icon={FileText} value="45" label="Imported Invoices" />
+          <StatCard icon={FileText} value={invoices.length || 0} label="Imported Invoices" />
           <StatCard icon={Clock} value="45" label="Pending Orders" />
           <StatCard icon={Star} value="12" label="Customer Reviews" />
           <StatCard icon={CheckCircle} value="67" label="Completed Transactions" />
@@ -178,9 +94,9 @@ export default function OutgoingInvoices() {
             variant="flat"
             startContent={<Download size={18} />}
             className="text-default-700 font-medium"
-            onClick={downloadLog}
+            onClick={handleImportExcel}
           >
-            Export to Xsl
+            Import / Export Excel
           </Button>
         </div>
 
@@ -190,15 +106,14 @@ export default function OutgoingInvoices() {
           selectionMode="multiple"
           selectedKeys={selectedRows}
           onSelectionChange={(keys) => {
-            if (keys !== "all") {
-              setSelectedRows(keys as Set<string>)
-            }
-          }}          className="mb-6"
+            if (keys !== 'all') setSelectedRows(keys as Set<string>)
+          }}
+          className="mb-6"
           aria-label="Invoice table"
         >
           <TableHeader>
             <TableColumn key="invoiceNumber">Invoice Number</TableColumn>
-            <TableColumn key="customerName">Customer Name</TableColumn>
+            <TableColumn key="customer">Customer</TableColumn>
             <TableColumn key="invoiceDate">Invoice Date</TableColumn>
             <TableColumn key="dueDate">Due Date</TableColumn>
             <TableColumn key="totalAmount">Total Amount</TableColumn>
@@ -208,52 +123,29 @@ export default function OutgoingInvoices() {
             </TableColumn>
           </TableHeader>
           <TableBody>
-            {paginatedInvoices.map((invoice) => (
-              <TableRow key={invoice.id}>
-                <TableCell>{invoice.id}</TableCell>
-                <TableCell>{invoice.customer}</TableCell>
-                <TableCell>{invoice.invoiceDate}</TableCell>
-                <TableCell>{invoice.dueDate}</TableCell>
-                <TableCell>{invoice.amount}</TableCell>
+            {paginatedInvoices.map((invoice: any, idx) => (
+              <TableRow key={invoice['Invoice Number'] || idx}>
+                <TableCell>{invoice['Invoice Number']}</TableCell>
+                <TableCell>{invoice['Vendor']}</TableCell>
+                <TableCell>{invoice['Date']}</TableCell>
+                <TableCell>{invoice['Due Date']}</TableCell>
+                <TableCell>{invoice['Total']}</TableCell>
                 <TableCell>
-                  <Chip
-                    variant="flat"
-                    color="success"
-                    size="sm"
-                    className="font-medium"
-                  >
-                    {invoice.status}
-                  </Chip>
+                  <Chip variant="flat" color="success" size="sm" className="font-medium">
+        {invoice['Tax']}              
+    </Chip>
                 </TableCell>
                 <TableCell>
-                  <Dropdown>
-                    <DropdownTrigger>
-                      <Button
-                        isIconOnly
-                        size="sm"
-                        variant="light"
-                        className="text-default-500"
-                      >
-                        <DotsThreeVertical size={18} />
-                      </Button>
-                    </DropdownTrigger>
-                    <DropdownMenu>
-                      <DropdownItem key="view">View Details</DropdownItem>
-                      <DropdownItem key="edit">Edit Invoice</DropdownItem>
-                      <DropdownItem key="download">Download PDF</DropdownItem>
-                      <DropdownItem key="send">Send to Customer</DropdownItem>
-                      <DropdownItem key="delete" color="danger">
-                        Delete
-                      </DropdownItem>
-                    </DropdownMenu>
-                  </Dropdown>
+                  <Button isIconOnly size="sm" variant="light">
+                    <DotsThreeVertical size={18} />
+                  </Button>
                 </TableCell>
               </TableRow>
             ))}
           </TableBody>
         </Table>
 
-        {/* Footer Info & Pagination */}
+        {/* Pagination */}
         <div className="flex items-center justify-between">
           <p className="text-sm text-default-500">
             {selectedRows.size} of {itemsPerPage} row(s) selected.

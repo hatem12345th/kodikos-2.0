@@ -18,7 +18,8 @@ export default function Analytics() {
       
 
         {/* Top Stats Grid */}
-        <div className="mb-8 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
+        <div className="mb-8 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-2">
+          <div className='grid grid-cols-2 gap-2'>
           <StatCard
             icon="truck"
             label="Total Revenue"
@@ -51,10 +52,15 @@ export default function Analytics() {
             change="-3.1%"
             isPositive={false}
           />
+          </div>
+           <Card className="border border-divider bg-card p-6">
+              <InvoicesChart />
+            </Card>
+
         </div>
 
         {/* Charts Grid */}
-        <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
+        <div className="grid grid-cols-1 gap-6 items-center lg:grid-cols-3">
           {/* Revenue Chart - Takes 2 columns on large screens */}
           <div className="lg:col-span-2">
             <Card className="border border-divider bg-card p-6">
@@ -62,14 +68,7 @@ export default function Analytics() {
             </Card>
           </div>
 
-          {/* Right Column Charts */}
-          <div className="space-y-6">
-            {/* Invoices per Day Chart */}
-            <Card className="border border-divider bg-card p-6">
-              <InvoicesChart />
-            </Card>
-
-            {/* Invoices Status Chart */}
+          <div className="space-y-6 h-full">           
             <Card className="border border-divider bg-card p-6">
               <InvoicesStatus />
             </Card>
