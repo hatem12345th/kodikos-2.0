@@ -32,6 +32,7 @@ import {
   Plus,
 } from '@phosphor-icons/react'
 import { useNavigate } from 'react-router-dom'
+import { downloadLog } from '@/lib/api'
 
 const invoices = [
   {
@@ -177,6 +178,7 @@ export default function OutgoingInvoices() {
             variant="flat"
             startContent={<Download size={18} />}
             className="text-default-700 font-medium"
+            onClick={downloadLog}
           >
             Export to Xsl
           </Button>
