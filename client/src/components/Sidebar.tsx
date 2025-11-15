@@ -41,9 +41,8 @@ export default function Sidebar({ open, setOpen }: SidebarProps) {
   const handleNavigate = (path: string) => navigate(path);
 
   const getButtonProps = (path: string) => {
-    const isActive = location.pathname === path;
     return {
-      variant: isActive ? "solid" : "light",
+     
       size: "lg" as const,
       className: `w-full flex items-center transition-all duration-200 rounded-lg ${
         open ? "justify-start" : "justify-center"
@@ -78,7 +77,11 @@ export default function Sidebar({ open, setOpen }: SidebarProps) {
       {/* Main Navigation */}
       <nav className="flex-1 p-4 space-y-2">
         {menuItems.map((item) => (
-          <Button key={item.name}   onPress={() => handleNavigate(item.path)} {...getButtonProps(item.path)}>
+          <Button key={item.name}   onPress={() => handleNavigate(item.path)} className={`w-full flex items-center transition-all duration-200 rounded-lg ${
+        open ? "justify-start" : "justify-center"
+      }`}   
+         variant= {location.pathname === item.path ? "solid" : "light"}
+      >
             {item.icon}
             {open && (
               <>
@@ -93,7 +96,12 @@ export default function Sidebar({ open, setOpen }: SidebarProps) {
       {/* Bottom Navigation + Theme Toggle */}
       <div className=" p-4 space-y-2">
         {bottomItems.map((item) => (
-          <Button key={item.name} onClick={() => handleNavigate(item.path)} {...getButtonProps(item.path)}>
+          <Button key={item.name} onClick={() => handleNavigate(item.path)} {...getButtonProps(item.path)}
+             onPress={() => handleNavigate(item.path)} className={`w-full flex items-center transition-all duration-200 rounded-lg ${
+        open ? "justify-start" : "justify-center"
+      }`}   
+                     variant= {location.pathname === item.path ? "solid" : "light"}
+          >
             {item.icon}
             {open && <span className="ml-3 font-medium">{item.name}</span>}
           </Button>

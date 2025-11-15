@@ -1,9 +1,7 @@
 import ProtectedRoute from "@/components/ProtectedRoute";
-import { ThemeSwitcher } from "@/components/ThemeSwitcher";
-import { DashboardLayout } from "@/layout";
-import { DashboardPage } from "@/pages";
-import { Button, Card } from "@heroui/react";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { DashboardLayout, OutgoingInvoicesLayout } from "@/layout";
+import { Analytics, DashboardPage, OutgoingInvoices } from "@/pages";
+import { createBrowserRouter } from "react-router-dom";
 
 
 export const router = createBrowserRouter([
@@ -21,7 +19,15 @@ export const router = createBrowserRouter([
             path: '/dashboard', 
             element: <DashboardPage /> 
           },
-         
+          {
+            path:"/outgoing-invoices",
+            element:<OutgoingInvoicesLayout />
+          },
+          {
+            path:"/Analytics",
+            element:<Analytics />
+          }
+          ,
           { 
             path: '*', 
             element: <h1>Not fond</h1> 
