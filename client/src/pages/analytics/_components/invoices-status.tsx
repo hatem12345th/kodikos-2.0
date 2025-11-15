@@ -25,7 +25,7 @@ export function InvoicesStatus() {
           <DropdownTrigger>
             <Button
               isIconOnly
-              className="gap-1 bg-transparent text-foreground"
+              className="gap-1 bg-transparent w-24 text-foreground"
               variant="light"
               endContent={<CaretDown size={16} />}
             >

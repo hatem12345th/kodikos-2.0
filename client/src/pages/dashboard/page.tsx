@@ -210,7 +210,7 @@ const DashboardPage: FC = () => {
         const formData = new FormData();
         formData.append("file", file);
 
-        const response = await api.post("/api/Invoice/process", formData, {
+        const response = await api.post("/Invoice/process", formData, {
           headers: {
             "Content-Type": "multipart/form-data",
           },
@@ -232,7 +232,7 @@ const DashboardPage: FC = () => {
   };
 
   return (
-    <div className="w-full p-8 bg-default-50">
+    <div className="w-full p-8 ">
       <ProgressOverlay
         isVisible={showProgress}
         onComplete={() => setShowProgress(false)}

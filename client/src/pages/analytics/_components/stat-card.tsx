@@ -1,7 +1,7 @@
 'use client';
 
 import { Card } from '@heroui/card';
-import { Truck } from '@phosphor-icons/react';
+import { Coins, Truck } from '@phosphor-icons/react';
 
 interface StatCardProps {
   icon: string;
@@ -22,10 +22,10 @@ export function StatCard({
 }: StatCardProps) {
   return (
     <Card className="border border-divider bg-card p-6">
-      <div className="space-y-4">
+      <div className="space-y-4  grid grid-cols-2 items-center ">
         <div className="flex items-center gap-3">
           <div className="rounded-lg bg-muted p-2">
-            <Truck size={20} className="text-muted-foreground" />
+            <Coins size={32} className="text-muted-foreground" />
           </div>
         </div>
 
@@ -34,8 +34,8 @@ export function StatCard({
             <span className="text-3xl font-bold text-foreground">{value}</span>
             <span className="text-sm text-muted-foreground">{suffix}</span>
           </div>
-          <p className="text-sm text-muted-foreground">{label}</p>
         </div>
+                <p className="text-sm text-muted-foreground">{label}</p>
 
         <div className="flex items-center justify-between">
           <span
