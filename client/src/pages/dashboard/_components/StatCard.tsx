@@ -6,7 +6,7 @@ import { FileCloudIcon } from "@phosphor-icons/react";
 
 // Types
 interface StatCardProps {
-  icon: React.ComponentType<React.SVGProps<SVGSVGElement>>;
+  icon: any;
   number: string | number;
   label: string;
   trend?: number;
@@ -33,7 +33,7 @@ export const StatCard: FC<StatCardProps> = ({
       <CardBody className="flex flex-col items-center justify-between py-6 px-6 gap-4">
        <div className="flex gap-8 items-center ">
         <div className="bg-default-300 rounded-full">
-            <FileCloudIcon size={32} className=" " />
+            <Icon   size={24}  />
         </div>
 
        <div className="flex flex-col gap-2">

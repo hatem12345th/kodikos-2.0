@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState } from 'react'
+import  { useState } from 'react'
 import {
   Card,
   Button,
@@ -13,7 +13,7 @@ import {
   Chip,
 
 } from '@heroui/react'
-import { FileText, Clock, Star, CheckCircle, Plus, List, GridFour, DotsThreeVertical, CaretLeft, CaretRight } from '@phosphor-icons/react'
+import {  Plus, List, GridFour, DotsThreeVertical, CaretLeft, CaretRight, UploadIcon, FileCloudIcon, HandCoinsIcon, FileMinusIcon } from '@phosphor-icons/react'
 import { useNavigate } from 'react-router-dom'
 import { downloadAndReadLog } from '@/lib/api'
 import { Download } from 'lucide-react'
@@ -64,10 +64,10 @@ export default function OutgoingInvoices() {
 
         {/* Stat Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-          <StatCard icon={FileText} value={invoices.length || 0} label="Imported Invoices" />
-          <StatCard icon={Clock} value="45" label="Pending Orders" />
-          <StatCard icon={Star} value="12" label="Customer Reviews" />
-          <StatCard icon={CheckCircle} value="67" label="Completed Transactions" />
+          <StatCard icon={UploadIcon} value={invoices.length || 0} label="Imported Invoices" />
+          <StatCard icon={FileCloudIcon} value="45" label="Synced Invoices from email" />
+          <StatCard icon={HandCoinsIcon} value="12" label="Paid Invoices" />
+          <StatCard icon={FileMinusIcon} value="67" label="Unpaid Invoices" />
         </div>
 
         {/* View Controls */}
