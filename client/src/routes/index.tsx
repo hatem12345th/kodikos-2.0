@@ -1,12 +1,12 @@
 import ProtectedRoute from "@/components/ProtectedRoute";
 import { DashboardLayout, OutgoingInvoicesLayout } from "@/layout";
-import { Analytics, DashboardPage, OutgoingInvoices } from "@/pages";
+import { Analytics, DashboardPage, LandingPage, OutgoingInvoices } from "@/pages";
 import { createBrowserRouter } from "react-router-dom";
 
 export const router = createBrowserRouter([
   {
     path: "/",
-    element: <></>,
+    element: <LandingPage />,
   },
   {
     element: <ProtectedRoute />,
@@ -24,6 +24,10 @@ export const router = createBrowserRouter([
           },
           {
             path: "/Analytics",
+            element: <Analytics />,
+          },
+           {
+            path: "/dashboard",
             element: <Analytics />,
           },
           {
